@@ -13,12 +13,16 @@ td v3.1 <BR>
 
 td v3.0 <BR>
         - Live mode now works perfectly 
+        
 td v2.5 <BR>
         - Live mode works, but instantly crashes within few seconds. The problems stems from the fact that a threading process is trying to  update the main GUI causing a fatal graphical error. GUI can only be updated within main GUI loop.  
+        
 td v2.0 <BR>
         - Added live mode, however the entire GUI becomes unresponsive and essentially useless. 
+        
 td v1.5 <BR>
         - From the advice of Andreas, switched the GUI python package from tkinter to wxpython. Added a settings page separate from main GUI 
+        
 td v1.0 <BR>
         - Added a few buttons to tkinter interface. Finished main tuneDiagram program to display tunes
 
