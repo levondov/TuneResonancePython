@@ -4,7 +4,7 @@ TuneResonancePython
 A Tune Resonance Program developed in python that can be used when working with non linear beam dynamics
 
 Tune-Resonance-Program
-----------------Current Version----------------------- 
+----------------Current Version----------------------- <BR>
 td v3.1 - Program now shuts down follow when exited
         - Program defaults have been set the MLS values
         - Matplotlib Nav toolbar now works during live mode
@@ -16,7 +16,7 @@ td v2.0 - Added live mode, however the entire GUI becomes unresponsive and essen
 td v1.5 - From the advice of Andreas, switched the GUI python package from tkinter to wxpython. Added a settings page separate from main GUI 
 td v1.0 - Added a few buttons to tkinter interface. Finished main tuneDiagram program to display tunes
 
-----------------INFO---------------------------------- 
+----------------INFO---------------------------------- <BR>
 This program is used to simulate tune resonances used in nonlinear beam dynamics. The program goes up to 10th order diagrams, but can easily be modified to go higher. A settings page provide lots of customizability for the user. There is also a 'live mode' that can connect with EPICS to get live updates of working points (x,y) and plot accordingly.
 
 'Main Program contains the full program. 'scripts not used' is a folder containing some ideas that were not implemented.
