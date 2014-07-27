@@ -4,16 +4,23 @@ TuneResonancePython
 A Tune Resonance Program developed in python that can be used when working with non linear beam dynamics
 
 ----------------Current Version----------------------- <BR>
-td v3.1 - Program now shuts down follow when exited
-        - Program defaults have been set the MLS values
-        - Matplotlib Nav toolbar now works during live mode
-        - Phase advance lines now work properly
-        - added a field to get integer part
-td v3.0 - Live mode now works perfectly
-td v2.5 - Live mode works, but instantly crashes within few seconds. The problems stems from the fact that a threading process is trying to update the main GUI causing a fatal graphical error. GUI can only be updated within main GUI loop. 
-td v2.0 - Added live mode, however the entire GUI becomes unresponsive and essentially useless. 
-td v1.5 - From the advice of Andreas, switched the GUI python package from tkinter to wxpython. Added a settings page separate from main GUI 
-td v1.0 - Added a few buttons to tkinter interface. Finished main tuneDiagram program to display tunes
+td v3.1 <BR>
+        - Program now shuts down follow when exited <BR>
+        - Program defaults have been set the MLS values <BR>
+        - Matplotlib Nav toolbar now works during live mode <BR>
+        - Phase advance lines now work properly <BR>
+        - added a field to get integer part <BR>
+
+td v3.0 <BR>
+        - Live mode now works perfectly 
+td v2.5 <BR>
+        - Live mode works, but instantly crashes within few seconds. The problems stems from the fact that a threading process is trying to  update the main GUI causing a fatal graphical error. GUI can only be updated within main GUI loop.  
+td v2.0 <BR>
+        - Added live mode, however the entire GUI becomes unresponsive and essentially useless. 
+td v1.5 <BR>
+        - From the advice of Andreas, switched the GUI python package from tkinter to wxpython. Added a settings page separate from main GUI 
+td v1.0 <BR>
+        - Added a few buttons to tkinter interface. Finished main tuneDiagram program to display tunes
 
 ----------------INFO---------------------------------- <BR>
 
