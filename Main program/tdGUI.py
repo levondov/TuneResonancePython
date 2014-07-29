@@ -13,19 +13,25 @@ EVT_PLOT = wx.PyEventBinder(myEVT_PLOT, 1);
 
 class tdGUI:
     # main screen
-    size = (640, 539);
+    size = (640, 560);
     app = 0
     frame = 0;
     panel = 0;
 
     # box sizers
     hbox1 = 0;
+    hbox2 = 0;
     vbox = 0;
 
     #buttons
     btn1=0; #start live
     btn15=0; # stop live
     btn2=0; # settings
+
+    # display tune
+    txt = '';
+    horTune = 0;
+    verTune = 0;
 
     # matplotlib stuff
     tune = 0; #tuneDiagram object
@@ -35,7 +41,7 @@ class tdGUI:
     # settings stuff
     settingspage = 0; # settingspage object. When this is created, settingspage opens
     settingspageRange = [2, 3, 3, 4, 3, 2]; # first 4 values define axis range, i.e. m=1 -> m=2 & n=2-> to n=3, last 2 values are working point integer parts
-    settingspageCheckbox = [True, True, True, True, False, False, True, False]; #determines whether a checkbox has been selected or not on the settings page
+    settingspageCheckbox = [True, True, True, True, False, False, True, False, False]; #determines whether a checkbox has been selected or not on the settings page
     settingspageOrderbox = [True, True, True, False, False, False, False, False, False, False]; # same as above checkbox, but this is used for the order #
 
     #live mode
@@ -71,6 +77,7 @@ class tdGUI:
         # create horizontal & vertical boxes
         self.vbox = wx.BoxSizer(wx.VERTICAL);
         self.hbox1 = wx.BoxSizer(wx.HORIZONTAL);
+        self.hbox2 = wx.BoxSizer(wx.HORIZONTAL);
 
         # construct everything
         self.initialize();
@@ -101,10 +108,14 @@ class tdGUI:
         self.hbox1.Add((25, -1));
         self.hbox1.Add(btn3, flag=wx.CENTER);
 
+        self.txt = wx.StaticText(self.panel, label='Horizontal Tune: '+str(self.horTune)+' , Vertical Tune: '+str(self.verTune));
+        self.hbox2.Add(self.txt,flag=wx.CENTER|wx.EXPAND);
+
         # add horzinal boxes to vertical box
         self.vbox.Add(self.hbox1, flag=wx.LEFT | wx.TOP, border=5);
         self.vbox.Add((-1, 10));
         self.vbox.Add(self.canvas, flag=wx.EXPAND, border=5)
+        self.vbox.Add(self.hbox2,flag=wx.ALIGN_CENTER,border=5)
 
         self.panel.SetSizer(self.vbox);
 
@@ -146,6 +157,10 @@ class tdGUI:
             # get integer part of the tune
             integerHor = self.settingspageRange[4];
             integerVer = self.settingspageRange[5];
+            # check for mirror tune
+            if self.settingspageCheckbox[8]:
+                integerHor+=0.5
+                integerVer+=0.5
             # start separate thread to process event so the GUI does not freeze up
             self.worker = CountingThread(self.panel,self, self.tune,self.canvas,self.livemode, self.pv1, self.pv2, self.rfFreq, self.pvNames[3], [integerHor, integerVer]);
             self.worker.daemon = True;
@@ -162,9 +177,23 @@ class tdGUI:
     # will continue updating and drawing as long as we are in live mode
     def continueLive(self, evt):
         if self.livemode.get():
+            # update canvas
             self.canvas.draw();
+            # update text
+            self.horTune,self.verTune = self.livemode.getTune()
+            self.updateTuneText()
             # after drawing, start over from startLive()
             self.startLive(evt);
+
+    def updateTuneText(self):
+        txt2 = wx.StaticText(self.panel, label='Horizontal Tune: '+str(self.horTune)+' , Vertical Tune: '+str(self.verTune));
+
+        self.hbox2.Remove(self.txt);
+        self.txt.Destroy()
+        self.hbox2.Add(txt2);
+        self.hbox2.Layout();
+        self.vbox.Layout();
+        self.txt = txt2;
 
     # Opens a settings page/window
     def settingsPage(self, e):
@@ -242,7 +271,7 @@ class CountingThread(threading.Thread):
         # get RF freq
         refFreq = self._rfFreq.get() / int(self._pvNames);
         # print current tune, this can be disabled
-        print 'Hor tune = {0}, and Ver tune =  {1}'.format(self._intHor + self._pv1.get()/refFreq,self._intVer + self._pv2.get()/refFreq);
+        self._livemode.changeTune(self._intHor + self._pv1.get()/refFreq,self._intVer + self._pv2.get()/refFreq)
         # update the tune working point qX and qY values
         self._tune.newWorkingpoint(self._intHor + (self._pv1.get() / refFreq), self._intVer + (self._pv2.get() / refFreq));
         # plot the working point as a circle using the new qX and qY coordinates
@@ -254,12 +283,21 @@ class CountingThread(threading.Thread):
 # a class to be used by everything to check the current status of livemode (True or False)
 class livemode:
     livemode=False;
+    currentHorTune=0;
+    currentVerTune=0;
 
     def __init__(self):
         self.livemode = False;
 
     def change(self, livemode):
         self.livemode = livemode;
+
+    def changeTune(self,hor,ver):
+        self.currentHorTune=hor;
+        self.currentVerTune=ver;
+
+    def getTune(self):
+        return self.currentHorTune,self.currentVerTune;
 
     def get(self):
         return self.livemode;

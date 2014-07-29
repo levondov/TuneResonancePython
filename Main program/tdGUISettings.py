@@ -37,6 +37,7 @@ class tdGUISettings:
     checkbox6=0;
     checkbox7=0;
     checkbox8=0;
+    checkbox9=0;
 
     # order checkboxes
     orderboxValues=0;
@@ -61,7 +62,7 @@ class tdGUISettings:
     rfFreqName='';
     harNumName='';
 
-    def __init__(self, parent, tune, order, rangeValues=[2,3,3,4,3,2],checkboxValues=[True,True,True,True,True,False,False,False],
+    def __init__(self, parent, tune, order, rangeValues=[2,3,3,4,3,2],checkboxValues=[True,True,True,True,True,False,False,False,False],
                  orderboxValues=[True,True,True,False,False,False,False,False,False,False]):
         self.window=wx.App();
 
@@ -126,7 +127,7 @@ class tdGUISettings:
 
         hbox2 = wx.BoxSizer(wx.HORIZONTAL);
 
-        txt1 = wx.StaticText(self.panel, label='RF Freq:               ');
+        txt1 = wx.StaticText(self.panel, label='RF Freq:           ');
         hbox2.Add(txt1, flag=wx.ALIGN_CENTER,border=5);
         hbox2.Add((5,-1));
 
@@ -135,7 +136,7 @@ class tdGUISettings:
         hbox2.Add(self.rfFreqName,border=5);
         hbox2.Add((10,-1));
 
-        txt2 = wx.StaticText(self.panel, label="Harmonic #: ");
+        txt2 = wx.StaticText(self.panel, label="Harmonic #:");
         hbox2.Add(txt2,flag=wx.ALIGN_CENTER,border=5);
         hbox2.Add((5,-1));
 
@@ -337,8 +338,10 @@ class tdGUISettings:
 
 
         self.checkbox8 = wx.CheckBox(self.panel, label='Display phase advance resonance lines');
+        self.checkbox9 = wx.CheckBox(self.panel, label='mirrored tune');
 
         self.sizer.Add(self.checkbox8,pos=(7,1),span=(1,4),flag=wx.LEFT|wx.ALIGN_LEFT);
+        self.sizer.Add(self.checkbox9,pos=(7,5),span=(1,2),flag=wx.LEFT|wx.ALIGN_CENTER);
 
         ntxt = wx.StaticText(self.panel, label='N (# units):');
         self.nlist = wx.SpinCtrl(self.panel,size=((50,-1)),style=wx.SP_ARROW_KEYS, min=0, max=20, initial=1);
@@ -351,6 +354,8 @@ class tdGUISettings:
             self.nlist.SetValue(self.tune.getN());
             self.updateUnitTune(-1);
             self.updateUnitN(-1);
+        if self.checkboxValues[8]:
+            self.checkbox9.Set3StateValue(wx.CHK_CHECKED);
 
         # Add last 2 buttons
         self.btn1 = wx.Button(self.panel, label='Ok', size=(100, 30));
@@ -377,6 +382,7 @@ class tdGUISettings:
         self.checkbox6.Bind(wx.EVT_CHECKBOX, self.updateColor6);
         self.checkbox7.Bind(wx.EVT_CHECKBOX, self.updateColor7);
         self.checkbox8.Bind(wx.EVT_CHECKBOX, self.updateUnitTune);
+        self.checkbox9.Bind(wx.EVT_CHECKBOX, self.updateMirror);
         self.orderbox1.Bind(wx.EVT_CHECKBOX, self.updateOrder);
         self.orderbox2.Bind(wx.EVT_CHECKBOX, self.updateOrder);
         self.orderbox3.Bind(wx.EVT_CHECKBOX, self.updateOrder);
@@ -429,6 +435,13 @@ class tdGUISettings:
         self.tune.newAxis(m1,m2,n1,n2);
         self.rangeValues = [m1, m2, n1, n2, integerN, integerM];
         self.parent.setRange(self.rangeValues);
+
+    def updateMirror(self, e):
+        if self.checkbox9.GetValue():
+            self.checkboxValues[8] = True;
+        else:
+            self.checkboxValues[8] = False;
+        self.parent.setCheckbox(self.checkboxValues);
 
     def updateUnitTune(self, e):
         # if unit tune is checked, disable all color options

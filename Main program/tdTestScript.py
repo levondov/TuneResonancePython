@@ -9,9 +9,9 @@ import numpy as np
 
 
 # Can change these to whatever your epics variables are called
-pv1 = PV('test:TuneHor');
-pv2 = PV('test:TuneVer');
-pv3 = PV('test:TuneRF');
+pv1 = PV('TUNEZRP:measX');
+pv2 = PV('TUNEZRP:measY');
+pv3 = PV('MCLKHGP:rdFrq');
 
 refFreq = 500e6;
 horFreq = 1.115e6;
