@@ -4,6 +4,11 @@ TuneResonancePython
 A Tune Resonance Program developed in python that can be used when working with non linear beam dynamics
 
 ----------------Current Version----------------------- <BR>
+
+td v3.1.5 <BR>
+        - added mirror tune option in settings <BR>
+        - added a display of the current tune at the bottom of the page <BR>
+        
 td v3.1 <BR>
         - Program now shuts down follow when exited <BR>
         - Program defaults have been set the MLS values <BR>
