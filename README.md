@@ -41,8 +41,8 @@ Lines 18-21, variables m1,n1,m2,n2 define the axes range to display.
 
 tdGUI Class <BR>
 
-Line 43, variable SettingspageRange define the axes range and the integer parts of the working point
-Line 50, variable pvNames defines the EPICS variable names used to grab non integer working point
+Line 43, variable SettingspageRange define the axes range and the integer parts of the working point <BR>
+Line 50, variable pvNames defines the EPICS variable names used to grab non integer working point <BR>
 
 Changing these will change the default startup option for the program.
 
