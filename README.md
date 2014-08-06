@@ -30,6 +30,22 @@ td v1.5 <BR>
         
 td v1.0 <BR>
         - Added a few buttons to tkinter interface. Finished main tuneDiagram program to display tunes
+        
+----------------Default Settings---------------------- <BR>
+
+The current default settings in the program are that of the MLS. If you would like to change the default settings to match that of another machine there are only a few variables that need to be changed.
+
+TuneDiagram Class <BR>
+
+Lines 18-21, variables m1,n1,m2,n2 define the axes range to display.
+
+tdGUI Class <BR>
+
+Line 43, variable SettingspageRange define the axes range and the integer parts of the working point <BR>
+Line 50, variable pvNames defines the EPICS variable names used to grab non integer working point <BR>
+
+Changing these will change the default startup option for the program.
+
 
 ----------------INFO---------------------------------- <BR>
 
