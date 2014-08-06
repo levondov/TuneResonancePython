@@ -180,16 +180,16 @@ class tdGUI:
             # update canvas
             self.canvas.draw();
             # update text
-            self.horTune,self.verTune = self.livemode.getTune()
             self.updateTuneText()
             # after drawing, start over from startLive()
             self.startLive(evt);
 
     def updateTuneText(self):
+        self.horTune,self.verTune = self.livemode.getTune()
         txt2 = wx.StaticText(self.panel, label='Horizontal Tune: '+str(self.horTune)+' , Vertical Tune: '+str(self.verTune));
-
         self.hbox2.Remove(self.txt);
         self.txt.Destroy()
+        txt2.SetForegroundColour((255,0,0)) # set text color
         self.hbox2.Add(txt2);
         self.hbox2.Layout();
         self.vbox.Layout();
@@ -277,6 +277,7 @@ class CountingThread(threading.Thread):
         # plot the working point as a circle using the new qX and qY coordinates
         self._tune.liveUpdate();
         # execute an event telling the GUI that this thread is done
+        time.sleep(0.5)
         evt = CountEvent(myEVT_PLOT, -1);
         wx.PostEvent(self._parent, evt);
 

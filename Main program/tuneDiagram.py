@@ -63,7 +63,7 @@ class tuneDiagram:
         self.axisSize();
         plt.axis([self.n1-0.1,self.n2+0.1,self.m1-0.1,self.m2+0.1]);
         #plt.title('Tune Resonance Program v3.0');
-        plt.xlabel('N'); plt.ylabel('M');
+        plt.xlabel('Qx'); plt.ylabel('Qy');
 
         # add working point
         self.addWorkingPoint();
